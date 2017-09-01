@@ -64,7 +64,11 @@ function check_result() {
 procName="Download Redmine"
 vecho "$procName..."
 dwnFile="${wwwroot}/redmine.tar.gz"
-wget "http://www.redmine.org/releases/redmine-${redmine_ver}.tar.gz" -O "${dwnFile}"
+wget "http://www.redmine.org/releases/redmine-${redmine_ver}.tar.gz" -O "${dwnFile}" &
+pid=$!
+trap "exit 1" 1 2 3 15
+trap "rm -rf ${dwnFile}" 0
+wait $pid
 check_result "$procName"
 
 
