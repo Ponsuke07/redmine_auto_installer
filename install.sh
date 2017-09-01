@@ -1,5 +1,13 @@
 #!/bin/bash
 
+function usage() {
+    name=$(basename $0)
+    cat << EOS
+Usage: $name [-a accessdir <dir>] [-D redmine-dir <dir>] [-h help] [-H host <host>] [-p user-password <pwd>]
+                  [-P root-passowrd <pwd>] [-u user-name <name>] [-v verbose] [-V redmin-version <version>]
+EOS
+exit 0
+}
 
 redmine_ver="3.2.0"
 wwwroot="/var/www/html"
@@ -12,14 +20,16 @@ upass=""
 password=""
 host="localhost"
 
-while getopts a:D:h:p:P:u:vV: OPT
+while getopts a:D:hH:p:P:u:vV: OPT
 do
     case $OPT in
         a) accessdir="$OPTARG"
            ;;
         D) redminedir="$OPTARG"
            ;;
-        h) host="$OPTARG"
+        h) usage
+           ;;
+        H) host="$OPTARG"
            ;;
         p) upass="$OPTARG"
            ;;
